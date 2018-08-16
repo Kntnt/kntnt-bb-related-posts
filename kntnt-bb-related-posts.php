@@ -83,7 +83,6 @@ final class Plugin {
 
 		$settings = $args['settings'];
 
-
 		if ( ! isset( $settings->kntnt_bb_related_posts_placement ) || 'none' == $settings->kntnt_bb_related_posts_placement ) {
 			return $args;
 		}
@@ -94,8 +93,9 @@ final class Plugin {
 
 		// Get an array of ids to the relational posts.
 		$relation_posts = get_field( trim( $settings->kntnt_bb_related_posts_key ), false, false );
-		if ( null == $relation_posts ) {
-			$relation_posts = [];
+
+		if ( ! $relation_posts ) {
+			return $args;
 		}
 
 		// Get an array of ids to the posts returned by the custom query
