@@ -81,22 +81,18 @@ final class Plugin {
 
 	public function loop_query_args( $args ) {
 
+		if ( ! isset( $args['settings'] ) ) return $args;
+
 		$settings = $args['settings'];
 
-		if ( ! isset( $settings->kntnt_bb_related_posts_placement ) || 'none' == $settings->kntnt_bb_related_posts_placement ) {
-			return $args;
-		}
+		if ( ! isset( $settings->kntnt_bb_related_posts_placement ) || 'none' == $settings->kntnt_bb_related_posts_placement ) return $args;
 
-		if ( ! isset( $settings->kntnt_bb_related_posts_key ) || empty( $settings->kntnt_bb_related_posts_key ) ) {
-			return $args;
-		}
+		if ( ! isset( $settings->kntnt_bb_related_posts_key ) || empty( $settings->kntnt_bb_related_posts_key ) ) return $args;
 
 		// Get an array of ids to the relational posts.
 		$relation_posts = get_field( trim( $settings->kntnt_bb_related_posts_key ), false, false );
 
-		if ( ! $relation_posts ) {
-			return $args;
-		}
+		if ( ! $relation_posts ) return $args;
 
 		// Get an array of ids to the posts returned by the custom query
 		// excluding the relational posts.
